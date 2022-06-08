@@ -17,4 +17,4 @@ app.post('/move', (req, res, next) =>{
     res.render('index.ejs', {position: move(req.body.movement), xcoordinate: position_array[0], ycoordinate: position_array[1], rotation: position_array[2]});
 })
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
