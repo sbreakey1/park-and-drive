@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park and Drive</title>
+    <!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
+
+<style>
+    table{
+        transform: rotate(-90deg);
+    }
+    td{
+        border: 1px solid #525252;
+        padding: 8px;
+        text-align: center;
+    }
+
+    body{
+        padding: 30px;
+        text-align: center;
+    }
+
+    .icon{
+        font-size: 12px !important;
+    }
+</style>
+
+</head>
+<body>
+    <main>
+        <% if(position!=-1){ %>
+            <p>Your position is "<%= position %>"</p>
+        <% } %>
+        <p></p>
+        <div class='uk-overflow-auto uk-table-center'>
+        <table class="uk-margin-auto">
+        <% for(var counter=0; counter<10; counter++){ %>
+            <tr>
+            <% for(var counter2=0; counter2<10; counter2++){ %>
+                <% if(position!=-1 && xcoordinate==counter && ycoordinate==counter2){ %>
+                    <% if(rotation=="N"){ %>
+                        <td><span uk-icon="arrow-right"></span></td>
+                    <% }else if(rotation=="E"){ %>
+                        <td><span uk-icon="arrow-down"></span></td>
+                    <% }else if(rotation=="S"){ %>
+                        <td><span uk-icon="arrow-left"></span></td>
+                    <% }else{ %>
+                        <td><span uk-icon="arrow-up"></span></td>
+                    <% } %>
+                <% }else{ %>
+                    <td></td>
+                <% } %>
+            <% } %>
+            </tr>
+        <% } %>
+        </table>
+        </div>
+        <button class="uk-button uk-button-secondary uk-margin-top" onclick="addMovement('M')">M</button>
+        <button class="uk-button uk-button-secondary uk-margin-top" onclick="addMovement('L')">L</button>
+        <button class="uk-button uk-button-secondary uk-margin-top" onclick="addMovement('R')">R</button>
+        <button class="uk-button uk-button-secondary uk-margin-top" onclick="reset()">Reset</button>
+        <form action="/move" method="POST">
+            <input class="uk-input uk-width-1-2@s uk-width-5-6 uk-margin-top" type="text" name="movement" value="" id="moves" readonly/>
+            <button type="submit" class="uk-button uk-button-primary uk-display-block uk-margin-auto uk-margin-top">Submit</button>
+        </form>
+    </main>
+
+<script>
+    function addMovement(letter){
+        document.getElementById("moves").value+=letter;
+    }
+
+    function reset(){
+        document.getElementById("moves").value="";
+    }
+</script>
+
+</body>
+</html>
